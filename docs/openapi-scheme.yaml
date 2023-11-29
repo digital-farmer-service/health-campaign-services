@@ -1,0 +1,271 @@
+openapi: 3.0.0
+info:
+  title: Scheme Application API
+  description: API for submitting scheme applications
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /scheme-application:
+    post:
+      summary: Submit a new scheme application
+      description: Submit a new scheme application with multipart form data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                schemeApplication:
+                  type: object
+                  properties:
+                    schemName:
+                      type: string
+                    appliedDate:
+                      type: string
+                      format: date
+                    applicationType:
+                      type: string
+                      enum:
+                        - individual/group
+                    farmerProfile:
+                      type: object
+                      properties:
+                        dbtRegistrationNo:
+                          type: string
+                        name:
+                          type: string
+                        fatherOrHusbandName:
+                          type: string
+                        aadharNo:
+                          type: string
+                        dob:
+                          type: string
+                          format: date
+                        gender:
+                          type: string
+                          enum:
+                            - male
+                            - female
+                            - other
+                        mobileNo:
+                          type: integer
+                        farmerType:
+                          type: string
+                        casteCategory:
+                          type: string
+                        maritalStatus:
+                          type: string
+                        location:
+                          type: object
+                          properties:
+                            distrctLG:
+                              type: integer
+                            blockLG:
+                              type: integer
+                            panchayatLG:
+                              type: integer
+                            villageLG:
+                              type: integer
+                        bankDetails:
+                          type: object
+                          properties:
+                            accountNo:
+                              type: string
+                            IFSCCODE:
+                              type: string
+                            bankName:
+                              type: string
+                    landDetails:
+                      type: object
+                      properties:
+                        khataNo:
+                          type: string
+                        khasraNo:
+                          type: string
+                        areaInAcres:
+                          type: number
+                        cropName:
+                          type: string
+                        distrctLG:
+                          type: integer
+                        blockLG:
+                          type: integer
+                        panchayatLG:
+                          type: integer
+                        villageLG:
+                          type: integer
+                    groupApplicantion:
+                      type: object
+                      properties:
+                        memberOfGroup:
+                          type: string
+                        groupOrCompanyName:
+                          type: string
+                        registrationDate:
+                          type: string
+                          format: date
+                        NocDoc:
+                          type: string
+                          format: binary
+                        applicants:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              dbtRegistrationNo:
+                                type: string
+                              name:
+                                type: string
+                              khataNo:
+                                type: string
+                              khasraNo:
+                                type: string
+                              areaInAcres:
+                                type: number
+                              cropName:
+                                type: string
+                              LpcDoc:
+                                type: string
+                                description: file name of the doc added as multipart File upload
+                    farmEquipment:
+                      type: object
+                      properties:
+                        sourceOfInfo:
+                          type: string
+                          description: Source of information about farm equipment
+                        devicesToBeInstalled:
+                          type: string
+                          description: List of devices to be installed
+                        pincode:
+                          type: integer
+                          description: Pincode of the farmer's location
+                        installingCompanay:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                description: Name of the installing company
+                              id:
+                                type: string
+                                description: ID of the installing company
+                              address:
+                                type: string
+                                description: Address of the installing company
+                              mobileNo:
+                                type: integer
+                                description: Mobile number of the installing company
+                              email:
+                                type: string
+                                description: Email address of the installing company
+                        selfGrant:
+                          type: boolean
+                          description: Whether the farmer is willing to self-grant the farm equipment
+                    seedSubsidy:
+                      type: object
+                      properties:
+                        seasonName:
+                          type: string
+                          description: Name of the season
+                        seasonCode:
+                          type: string
+                          description: Code for the season
+                        schemeComponent:
+                          type: string
+                          description: Component of the scheme
+                        crop:
+                          type: string
+                          description: Type of crop
+                        cropVariety:
+                          type: string
+                          description: Variety of the crop
+                        weight:
+                          type: integer
+                          description: Weight of the seeds in kilograms
+                        price:
+                          type: number
+                          description: Price per kilogram of seeds
+                        totalAmount:
+                          type: number
+                          description: Total amount of the subsidy
+                        grantPercent:
+                          type: number
+                          description: Percentage of the subsidy granted
+                        grantAmount:
+                          type: number
+                          description: Amount of the subsidy granted
+                        DueAmount:
+                          type: number
+                          description: Due amount for the subsidy
+                        homeDelivery:
+                          type: boolean
+                          description: Whether the seeds should be delivered to the farmer's home
+                    documents:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          nameOfDoc:
+                            type: string
+                            description: Name of the document
+                          fileName:
+                            type: string
+                            description: File name of the document
+                    selfDeclaration:
+                      type: boolean
+                      description: Whether the farmer agrees to the self-declaration terms
+                Files:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Name of the file
+                      fileContent:
+                        type: string
+                        format: binary
+                        description: Content of the file
+
+      responses:
+        "200":
+          description: Scheme application submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applicationNumber:
+                    type: string
+                    description: Unique identifier for the scheme application
+                  status:
+                    type: string
+                    description: Current status of the scheme application (e.g., Received, Under Review, Approved, Rejected)
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Invalid scheme name"
+        "409":
+          description: Confict request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  oldApplicationNumber:
+                    type: string
+                    description: Unique identifier for the scheme application
+                  appliedDate:
+                    type: string
+                    description: Date of previous application submitted
