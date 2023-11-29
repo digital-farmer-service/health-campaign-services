@@ -20,7 +20,7 @@ paths:
                 schemeApplication:
                   type: object
                   properties:
-                    schemName:
+                    schemeName:
                       type: string
                     appliedDate:
                       type: string
@@ -197,7 +197,7 @@ paths:
                         grantAmount:
                           type: number
                           description: Amount of the subsidy granted
-                        DueAmount:
+                        dueAmount:
                           type: number
                           description: Due amount for the subsidy
                         homeDelivery:
