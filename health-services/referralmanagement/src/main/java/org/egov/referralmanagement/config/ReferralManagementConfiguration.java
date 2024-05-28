@@ -1,12 +1,13 @@
 package org.egov.referralmanagement.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
@@ -60,12 +61,52 @@ public class ReferralManagementConfiguration {
     @Value("${referralmanagement.referral.consumer.bulk.delete.topic}")
     private String deleteReferralBulkTopic;
 
+    @Value("${referralmanagement.hfreferral.kafka.create.topic}")
+    private String createHFReferralTopic;
+
+    @Value("${referralmanagement.hfreferral.kafka.update.topic}")
+    private String updateHFReferralTopic;
+
+    @Value("${referralmanagement.hfreferral.kafka.delete.topic}")
+    private String deleteHFReferralTopic;
+
+    @Value("${referralmanagement.hfreferral.consumer.bulk.create.topic}")
+    private String createHFReferralBulkTopic;
+
+    @Value("${referralmanagement.hfreferral.consumer.bulk.update.topic}")
+    private String updateHFReferralBulkTopic;
+
+    @Value("${referralmanagement.hfreferral.consumer.bulk.delete.topic}")
+    private String deleteHFReferralBulkTopic;
+
     @Value("${egov.search.project.staff.url}")
     private String projectStaffSearchUrl;
+
+    @Value("${egov.search.project.facility.url}")
+    private String projectFacilitySearchUrl;
+
+    @Value("${egov.search.project.url}")
+    private String projectSearchUrl;
 
     @Value("${egov.facility.host}")
     private String facilityHost;
 
     @Value("${egov.search.facility.url}")
     private String facilitySearchUrl;
+    
+    @Value("${egov.household.host}")
+    private String householdHost;
+
+    @Value("${egov.search.household.url}")
+    private String householdSearchUrl;
+    
+    @Value("${egov.search.household.member.url}")
+    private String householdMemberSearchUrl;
+    
+    @Value("${egov.individual.host}")
+    private String individualHost;
+
+    @Value("${egov.search.individual.url}")
+    private String individualSearchUrl;
+    
 }
